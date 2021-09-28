@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Users</title>
+</head>
+<body>
+<div>
+  <table border="1">
+    <thead>
+    <tr>
+      <th> Id </th>
+      <th> Name </th>
+      <th> LastName </th>
+      <th> Age </th>
+      <th> Delete this User </th>
+      <th> Change </th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${users.empty}">
+      <td colspan="2"> No Users Available </td>
+    </tr>
+    <tr th:each="user : ${users}">
+      <td><span th:text="${user.id}"> Id </span></td>
+      <td><span th:text="${user.name}"> Name </span></td>
+      <td><span th:text="${user.lastName}"> LastName </span></td>
+      <td><span th:text="${user.age}"> Age </span></td>
+      <td>
+        <form th:action="@{/delete(id=${user.id})}" th:object="${user}">
+          <input type="hidden" name="id" th:value="${user.id}">
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+      <td>
+        <form th:action="@{/edit(id=${user.id})}" th:object="${user}">
+          <input type="hidden" name="id" th:value="${user.id}">
+          <button type="submit">Change</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div>
+  <p1>Create User</p1>
+  <form action="#" th:action="@{/createUser}" th:object="${user}" method="post" th:border="2">
+    <p>Name: <input type="text" th:field="*{name}" /></p>
+    <p>Age: <input type="text" th:field="*{age}" /></p>
+    <p>LastName: <input type="text" th:field="*{lastName}" /></p>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+  </form>
+</div>
+</body>
+</html>
+
